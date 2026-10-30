@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: sheetcraft-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.3
+      - key: AI_PROVIDER
+        value: openrouter
+      - key: TRUST_PROXY
+        value: "true"
+      - key: OPENROUTER_API_KEY
+        sync: false          # set in the Render dashboard, never in git
+      - key: CORS_ORIGINS
+        sync: false          # exact frontend origin, e.g. https://your-site.netlify.app
+      - key: OPENROUTER_DAILY_BUDGET
+        value: "45"          # OpenRouter free: 50 requests/day (1000 after buying $10 credits once)
+      - key: AI_TOTAL_TIMEOUT_S
+        value: "50"
+      - key: OPENROUTER_MODELS
+        value: openai/gpt-oss-20b:free,google/gemma-4-31b-it:free,openai/gpt-oss-120b:free,meta-llama/llama-3.3-70b-instruct:free,openrouter/free   # comma-separated FREE model ids, best first

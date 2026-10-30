@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+@theme {
+  --color-navy: #071426; --color-deep: #10243E; --color-violet: #6558D9; --color-electric: #315BE8;
+  --color-gold: #F3C75B; --color-pale: #F6F8FF; --color-ink: #15284A; --color-muted: #5b6b88;
+  --font-sans: 'Segoe UI', Tahoma, 'Noto Sans Arabic', system-ui, sans-serif;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-rise: rise .7s ease-out both;
+  @keyframes float { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-14px) } }
+  @keyframes rise { from { opacity: 0; transform: translateY(16px) } to { opacity: 1; transform: none } }
+}
+/* v3 look-and-feel compat: default border colour and pointer cursor on buttons */
+@layer base {
+  *, ::after, ::before, ::backdrop, ::file-selector-button { border-color: var(--color-gray-200, currentColor); }
+  button:not(:disabled), [role="button"]:not(:disabled) { cursor: pointer; }
+}
+body { @apply bg-pale text-ink antialiased; }
+.dark body { @apply bg-navy text-slate-100; }
+.glass { background: rgba(255,255,255,.07); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.14); }
+.num { direction: ltr; unicode-bidi: isolate; font-variant-numeric: tabular-nums; }
+:focus-visible { outline: 2px solid #F3C75B; outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+/* readability gradient on the text side (physical right) of the hero artwork */
+.hero-fade { background: linear-gradient(to left, rgba(7,20,38,.88) 0%, rgba(7,20,38,.72) 38%, rgba(7,20,38,.3) 62%, rgba(7,20,38,0) 78%); }
